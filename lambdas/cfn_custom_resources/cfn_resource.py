@@ -1,4 +1,5 @@
-# MIT Licensed, Copyright (c) 2015 Ryan Scott Brown <sb@ryansb.com>
+# CF Wrapper based on the cfn-wrapper-python repository by ryansb :
+# https://github.com/ryansb/cfn-wrapper-python
 
 import json
 import logging

@@ -50,3 +50,6 @@ aws cloudformation delete-stack --stack-name cfn-exercise-custom-resources-usage
 aws cloudformation delete-stack --stack-name cfn-exercise-lambda-functions
 aws cloudformation delete-stack --stack-name cfn-exercise-s3
 ```
+
+## Credits
+The cfn_resource.py function is based on the [cfn-wrapper-python repository by ryansb](https://github.com/ryansb/cfn-wrapper-python).
