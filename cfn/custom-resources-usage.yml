@@ -1,0 +1,16 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Cfn exercise - custom resources usage
+Resources:
+  SecretManagerCredentials:
+    Type: AWS::CloudFormation::CustomResource
+    Properties:
+      ServiceToken:
+        Fn::ImportValue: 'cfn-exercise-lambda-SecretManagerCredentials'
+      SecretManagerKey: 'test/creds'
+Outputs:
+  # Here are the values we will focus on :
+  SecretUsername:
+    Value: !Sub '${SecretManagerCredentials.Username}'
+  SecretPassword:
+    Value: !Sub '${SecretManagerCredentials.Password}'

@@ -1,0 +1,14 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Cfn exercise - S3 bucket
+Parameters:
+  MyBucket:
+    Type: String
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref 'MyBucket'
+Outputs:
+  S3DomainName:
+    Value: !GetAtt 'S3Bucket.DomainName'

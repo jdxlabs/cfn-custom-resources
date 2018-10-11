@@ -1,0 +1,40 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Cfn exercise - custom resources
+Parameters:
+  MyBucket:
+    Type: String
+Resources:
+  SecretManagerCredentials:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !Ref 'MyBucket'
+        S3Key: lambdas/cfn_custom_resources.zip
+      Handler: credentials.handler
+      MemorySize: 128
+      Role: !Sub '${LambdaRole.Arn}'
+      Runtime: python3.6
+      Timeout: 60
+      Description: |
+        This lambda brings cloud formation custom resource
+        about credentials
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+        # To be restricted for prod-readiness
+Outputs:
+  SecretManagerCredentialsFunction:
+    Value: !GetAtt 'SecretManagerCredentials.Arn'
+    Export:
+      Name: 'cfn-exercise-lambda-SecretManagerCredentials'
