@@ -19,6 +19,20 @@ Resources:
       Description: |
         This lambda brings cloud formation custom resource
         about credentials
+  StrUtils:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !Ref 'MyBucket'
+        S3Key: lambdas/cfn_custom_resources.zip
+      Handler: str_utils.handler
+      MemorySize: 128
+      Role: !Sub '${LambdaRole.Arn}'
+      Runtime: python3.6
+      Timeout: 60
+      Description: |
+        This lambda brings cloud formation custom resource
+        about string utils
   LambdaRole:
     Type: AWS::IAM::Role
     Properties:
@@ -38,3 +52,7 @@ Outputs:
     Value: !GetAtt 'SecretManagerCredentials.Arn'
     Export:
       Name: 'cfn-exercise-lambda-SecretManagerCredentials'
+  StrUtilsFunction:
+    Value: !GetAtt 'StrUtils.Arn'
+    Export:
+      Name: 'cfn-exercise-lambda-StrUtils'

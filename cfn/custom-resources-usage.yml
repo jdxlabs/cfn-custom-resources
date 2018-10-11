@@ -1,6 +1,10 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 Description: Cfn exercise - custom resources usage
+Parameters:
+  String:
+    Type: String
+    Default: Toto
 Resources:
   SecretManagerCredentials:
     Type: AWS::CloudFormation::CustomResource
@@ -8,9 +12,39 @@ Resources:
       ServiceToken:
         Fn::ImportValue: 'cfn-exercise-lambda-SecretManagerCredentials'
       SecretManagerKey: 'test/creds'
+  StrToLower:
+    Type: AWS::CloudFormation::CustomResource
+    Properties:
+      ServiceToken:
+        Fn::ImportValue: 'cfn-exercise-lambda-StrUtils'
+      String: !Ref 'String'
+      Function: 'lower'
+  StrToUpper:
+    Type: AWS::CloudFormation::CustomResource
+    Properties:
+      ServiceToken:
+        Fn::ImportValue: 'cfn-exercise-lambda-StrUtils'
+      String: !Ref 'String'
+      Function: 'upper'
+  StrReplace:
+    Type: AWS::CloudFormation::CustomResource
+    Properties:
+      ServiceToken:
+        Fn::ImportValue: 'cfn-exercise-lambda-StrUtils'
+      String: !Ref 'String'
+      Function: 'replace'
+      Args:
+        - 'Toto'
+        - 'Titi'
 Outputs:
   # Here are the values we will focus on :
   SecretUsername:
     Value: !Sub '${SecretManagerCredentials.Username}'
   SecretPassword:
     Value: !Sub '${SecretManagerCredentials.Password}'
+  StrLower:
+    Value: !Sub '${StrToLower.Res}'
+  StrUpper:
+    Value: !Sub '${StrToUpper.Res}'
+  StrReplace:
+    Value: !Sub '${StrReplace.Res}'

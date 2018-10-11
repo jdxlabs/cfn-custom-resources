@@ -15,7 +15,7 @@ def get_credentials(event, context):
         json_value = json.loads(get_secret_value(secret_manager_key))
         return {
             'Status': 'SUCCESS',
-            'PhysicalResourceId': "%s/rules" % secret_manager_key,
+            'PhysicalResourceId': "%s/credentials" % secret_manager_key,
             'Data': {
                 'Username': json_value['username'],
                 'Password': json_value['password']
